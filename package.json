@@ -1,0 +1,13 @@
+{
+    "name": "test_grunt_curl",
+    "version": "0.0.1",
+    "dependencies": {
+        "grunt": "0.4.x"
+    },
+    "devDependencies": {
+        "grunt-curl":"2.0.x",
+        "grunt-dom-munger": "3.4.x",
+        "grunt-inline-css": "0.1.x",
+        "grunt-processhtml": "0.3.x"
+    }
+}
