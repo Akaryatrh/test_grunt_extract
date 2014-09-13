@@ -8,6 +8,7 @@
         "grunt-curl":"2.0.x",
         "grunt-dom-munger": "3.4.x",
         "grunt-inline-css": "0.1.x",
-        "grunt-processhtml": "0.3.x"
+        "grunt-processhtml": "0.3.x",
+        "juice": "0.4.x"
     }
 }

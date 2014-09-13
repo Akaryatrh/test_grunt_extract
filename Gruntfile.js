@@ -1,3 +1,4 @@
+var fs = require('fs');
 module.exports = function(grunt) {
 
   // ===========================================================================
@@ -7,26 +8,28 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-
-    curl: {
-      'temp/ifeelgoods.html': 'http://ifeelgoods.com/',
-    },
-
     dom_munger: {
       ifeelgoodsHeader: {
         options: {
-          read: {selector:'.header-wrap', attribute: '', writeto:'headerIFG', isPath: true}
+          callback: function($,file){
+            //var result = data.replace(/<!doctype [^>]*?>/gi, '');
+            var header = $('.header-wrap');
+            $('html').before(header).remove();
+          }
         },
-        src: 'temp/ifeelgoods.html'
+        src: 'temp/src/ifeelgoods_inline.html',
+        dest: 'temp/dest/header.html'
       }
+    },
+
+    curl: {
+      'temp/src/ifeelgoods.html': 'http://www.ifeelgoods.com/catalog/'
     },
 
     inlinecss: {
         main: {
-            options: {
-            },
             files: {
-                'temp/ifeelgoods_inline.html': 'temp/ifeelgoods.html'
+                'temp/src/ifeelgoods_inline.html': 'temp/src/ifeelgoods.html'
             }
         }
     },
@@ -34,7 +37,7 @@ module.exports = function(grunt) {
     processhtml: {
       dist: {
         files: {
-          'dist/header.html': ['<%= dom_munger.data.headerIFG %>']
+          'dist/header.html': ['temp/dest/header.html']
         }
       }
     }
@@ -59,6 +62,6 @@ module.exports = function(grunt) {
   // Main tasks ------------------------------------
   //grunt.registerTask('build', ['jshint', 'uglify', 'less', 'processhtml', 'sprite', 'imagemin']);
   //grunt.registerTask('server', ['build', 'connect', 'watch']);
-  grunt.registerTask('extract', ['dom_munger', 'inlinecss']);
+  grunt.registerTask('extract', ['curl', 'inlinecss', 'dom_munger']);
 
 };
